@@ -328,8 +328,8 @@ public class SwerveSubsystem extends SubsystemBase {
     public Command driveWithHeading(DoubleSupplier xSupplier, DoubleSupplier ySupplier,
                                      Supplier<Rotation2d> targetHeading, double deadband) {
         return run(() -> {
-            double x = applyDeadband(xSupplier.getAsDouble(), deadband) * maxSpeedMPS;
-            double y = applyDeadband(ySupplier.getAsDouble(), deadband) * maxSpeedMPS;
+            double x = applyDeadband(xSupplier.getAsDouble(), deadband) * speedMultiplier * maxSpeedMPS;
+            double y = applyDeadband(ySupplier.getAsDouble(), deadband) * speedMultiplier * maxSpeedMPS;
             double rot = headingPID.calculate(
                     getHeading().getRadians(), targetHeading.get().getRadians());
             driveFieldCentric(x, y, rot);
@@ -349,8 +349,8 @@ public class SwerveSubsystem extends SubsystemBase {
     public Command pointAtTarget(DoubleSupplier xSupplier, DoubleSupplier ySupplier,
                                   Supplier<Translation2d> targetPoint, double deadband) {
         return run(() -> {
-            double x = applyDeadband(xSupplier.getAsDouble(), deadband) * maxSpeedMPS;
-            double y = applyDeadband(ySupplier.getAsDouble(), deadband) * maxSpeedMPS;
+            double x = applyDeadband(xSupplier.getAsDouble(), deadband) * speedMultiplier * maxSpeedMPS;
+            double y = applyDeadband(ySupplier.getAsDouble(), deadband) * speedMultiplier * maxSpeedMPS;
 
             // Calculate angle from robot to target
             Translation2d robotPos = getPose().getTranslation();
